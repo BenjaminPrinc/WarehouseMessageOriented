@@ -11,6 +11,10 @@ Die detaillierte [Aufgabenstellung](TASK.md) beschreibt die notwendigen Schritte
 2. Bestehendes Warehouse Projekt um das Package "mom" und die Klasse *MOMSender.java* erweitert.
 3. Neues Projekt für Zentralrechner_MOM angelegt und konfiguriert.
 4. Warehouse Objekt als XML String versenden.
+5. Receiver einbauen
+6. Nachricht in Konsole ausgeben
+7. **GKÜ** String im Controller speichert alle Anfragen
+8. Alle 5 Sekunden wird der Receiver aktualisiert
 
 
 ## Implementierung
@@ -109,6 +113,35 @@ private MOMReceiver rec;
 public String warehouseTransfer() {
     rec = new MOMReceiver();
     return messages;
+}
+```
+
+## GKÜ
+### String welcher alle Daten speichert
+In ZentrallrechnerController.java:
+```java
+public static String messages = "<AlleWarenhaeuser>";
+```
+Künftige empfangene Daten werden vom Receiver an den String angehangen. Bei Abfragen wird ein "< /AlleWarenhaeuser>" angehangen.
+```java
+ZentralrechnerController.messages += message.getText();
+```
+
+### Timeout Funktionalität
+Bei Anfrage wartet der Receiver 5 Sekunden. Kommen während den 5 Sekunden keine neuen Daten an, werden die alten, im String gespeicherten Daten, zurückgegeben.
+
+MOMReceiver.java
+```java
+consumer = session.createConsumer( destination );
+System.out.println("Consumer initialized");
+// Start receiving
+TextMessage message = (TextMessage) consumer.receive(5000);
+if(message!=null) {
+        System.out.println("Message receiver");
+        System.out.println(message.getText());
+        ZentralrechnerController.messages += message.getText();
+} else {
+        System.out.println("timeout");
 }
 ```
 ## Quellen

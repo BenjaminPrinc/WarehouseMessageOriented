@@ -1,14 +1,10 @@
 package tradearea.warehouse;
 
-import jms.JmsProducer;
 import mom.MOMSender;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import tradearea.model.WarehouseData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
-import tradearea.model.WarehouseData;
 
 @RestController
 public class WarehouseController {
@@ -41,11 +37,6 @@ public class WarehouseController {
         MOMSender sender = new MOMSender();
         return service.getGreetings("Warehouse.Transfer!");
     }
-    /*@RequestMapping("/warehouse/transfer")
-    public WarehouseData sendMessage(@RequestBody WarehouseData warehouseData){
-        jmsProducer.sendMessage(warehouseData);
-        System.out.println(warehouseData);
-        return warehouseData;
-    }*/
+
 
 }

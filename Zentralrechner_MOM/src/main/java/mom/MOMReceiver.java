@@ -39,10 +39,14 @@ public class MOMReceiver {
             consumer = session.createConsumer( destination );
             System.out.println("Consumer initialized");
             // Start receiving
-            TextMessage message = (TextMessage) consumer.receive();
-            System.out.println("Message receiver");
-            System.out.println(message.getText());
-            ZentralrechnerController.messages = message.getText();
+            TextMessage message = (TextMessage) consumer.receive(5000);
+            if(message!=null) {
+                System.out.println("Message receiver");
+                System.out.println(message.getText());
+                ZentralrechnerController.messages += message.getText();
+            } else {
+                System.out.println("timeout");
+            }
             /*consumer.setMessageListener(new MessageListener() {
                 @Override
                 public void onMessage(Message message) {

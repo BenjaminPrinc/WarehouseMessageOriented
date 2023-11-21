@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 public class ZentralrechnerController {
 
-    public static String messages = "";
+    public static String messages = "<AlleWarenhaeuser>";
     private MOMReceiver rec;
     //private JmsConsumer cons;
 
@@ -25,7 +25,7 @@ public class ZentralrechnerController {
     public String warehouseTransfer() {
         rec = new MOMReceiver();
         //cons = new JmsConsumer();
-        return messages;
+        return messages+"</AlleWarenhaeuser>";
     }
 
 }
